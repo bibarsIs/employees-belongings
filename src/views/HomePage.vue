@@ -1,7 +1,7 @@
 <template>
+
   <div class="flex flex-col items-center">
-    <h1 class="py-8 text-2xl">Список сотрудников</h1>
-    <EmployeesTable></EmployeesTable>
+    <EmployeesTable class="pt-8"></EmployeesTable>
   </div>
 </template>
 
