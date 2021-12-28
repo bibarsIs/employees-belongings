@@ -1,0 +1,105 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "employeeName": "Иванов",
+      "surname": "Иванов",
+      "fatherName": "Иванович",
+      "items": [
+        {
+          "itemId": 1,
+          "itemName": "Ноутбук ASUS",
+          "itemCost": "270000"
+        },
+        {
+          "itemId": 2,
+          "itemName": "Беспроводная мышь",
+          "itemCost": "5000"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "employeeName": "Сидор",
+      "surname": "Сидоров",
+      "fatherName": "Сидорович",
+      "items": [
+        {
+          "itemId": 1,
+          "itemName": "Ноутбук ASUS",
+          "itemCost": "270000"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "employeeName": "Петр",
+      "surname": "Петров",
+      "fatherName": "Петрович",
+      "items": [
+        {
+          "itemId": 3,
+          "itemName": "Ноутбук Acer",
+          "itemCost": "250000"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "employeeName": "Жандос",
+      "surname": "Жандосов",
+      "fatherName": "Жандосович",
+      "items": [
+        {
+          "itemId": 3,
+          "itemName": "Ноутбук Acer",
+          "itemCost": "250000"
+        },
+        {
+          "itemId": 2,
+          "itemName": "Беспроводная мышь",
+          "itemCost": "5000"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "employeeName": "Марат",
+      "surname": "Маратов",
+      "fatherName": "Маратович",
+      "items": [
+        {
+          "itemId": 2,
+          "itemName": "Беспроводная мышь",
+          "itemCost": "5000"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "employeeName": "Сергей",
+      "surname": "Сергеев",
+      "fatherName": "Сергеевич",
+      "items": [
+        {
+          "itemId": 4,
+          "itemName": "Ручка",
+          "itemCost": "500"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "employeeName": "Дмитрий",
+      "surname": "Дмитриев",
+      "fatherName": "Дмитриевич",
+      "items": [
+        {
+          "itemId": 5,
+          "itemName": "Планшет",
+          "itemCost": "100000"
+        }
+      ]
+    }
+  ]
+}

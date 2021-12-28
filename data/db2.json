@@ -1,0 +1,45 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Иванов И.И",
+      "itemsTotal": "1",
+      "costTotal": "95000"
+    },
+    {
+      "id": 2,
+      "name": "Сидоров С.С.",
+      "itemsTotal": "3",
+      "costTotal": "585000"
+    },{
+      "id": 3,
+      "name": "Петров П.П.",
+      "itemsTotal": "2",
+      "costTotal": "275000"
+    },
+    {
+      "id": 4,
+      "name": "Кусаинов А.И",
+      "itemsTotal": "4",
+      "costTotal": "300000"
+    },
+    {
+      "id": 5,
+      "name": "Маратов И.И",
+      "itemsTotal": "6",
+      "costTotal": "12000"
+    },
+    {
+      "id": 6,
+      "name": "Сергеев И.И",
+      "itemsTotal": "2",
+      "costTotal": "11000"
+    },
+    {
+      "id": 7,
+      "name": "Дмитрий Д.Д",
+      "itemsTotal": "1",
+      "costTotal": "54000"
+    }
+  ]
+}
