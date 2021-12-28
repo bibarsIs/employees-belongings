@@ -34,8 +34,9 @@ export default {
       isLoading.value = true
     })
 
+    const sortedByName = []
     function sortByName() {
-
+      
     }
 
     return {

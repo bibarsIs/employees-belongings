@@ -100,6 +100,85 @@
           "itemCost": "100000"
         }
       ]
+    },
+    {
+      "id": 8,
+      "employeeName": "Дмитрий",
+      "surname": "Дмитриев",
+      "fatherName": "Дмитриевич",
+      "items": [
+        {
+          "itemId": 3,
+          "itemName": "Ноутбук Acer",
+          "itemCost": "250000"
+        },
+        {
+          "itemId": 4,
+          "itemName": "Ручка",
+          "itemCost": "500"
+        }
+
+      ]
+    },
+    {
+      "id": 9,
+      "employeeName": "Канат",
+      "surname": "Канатов",
+      "fatherName": "Канатович",
+      "items": [
+        {
+          "itemId": 5,
+          "itemName": "Планшет",
+          "itemCost": "100000"
+        },
+        {
+          "itemId": 2,
+          "itemName": "Беспроводная мышь",
+          "itemCost": "5000"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "employeeName": "Айдос",
+      "surname": "Айдосов",
+      "fatherName": "Айдосович",
+      "items": [
+        {
+          "itemId": 6,
+          "itemName": "Карандаш",
+          "itemCost": "200"
+        },
+        {
+          "itemId": 2,
+          "itemName": "Беспроводная мышь",
+          "itemCost": "5000"
+        },
+        {
+          "itemId": 4,
+          "itemName": "Ручка",
+          "itemCost": "500"
+        }
+
+      ]
+    },
+    {
+      "id": 11,
+      "employeeName": "Юрий",
+      "surname": "Юриев",
+      "fatherName": "Юриевич",
+      "items": [
+        {
+          "itemId": 7,
+          "itemName": "Ноутбук HP",
+          "itemCost": "300000"
+        },
+        {
+          "itemId": 2,
+          "itemName": "Беспроводная мышь",
+          "itemCost": "5000"
+        }
+      ]
     }
   ]
 }
