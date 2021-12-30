@@ -1,38 +1,81 @@
 <template>
-  <div v-if="isLoading">
+  <div>
     <q-table
         title="Список сотрудников"
         :rows="rows"
         :columns="columns"
-        row-key="id"
-    />
+        :row-key="row => row['id']"
+        v-model:pagination="pagination"
+        table-header-style="font-weight: bold"
+        hide-pagination
+        binary-state-sort
+        :filter="filter"
+        @request="handleRequest"
+    >
+      <template v-slot:top-right>
+        <q-input rounded dense debounce="300" v-model="filter" placeholder="Поиск" model-value="">
+          <template v-slot:append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
+      </template>
+
+    </q-table>
+    <div class="row justify-center q-mt-md">
+      <q-pagination
+          v-model="pagination.page"
+          color="grey-8"
+          :max="pagesNumber"
+          size="15px"
+          :model-value="pagination.page"
+      />
+    </div>
   </div>
-  <span v-else>Загружается...</span>
 </template>
 
 <script>
-import {computed, onMounted, reactive, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import axios from 'axios';
-import {columns, rows} from "../composables/tableData";
+import {columns, pagination, rows} from "../composables/tableData";
 
 
 export default {
   name: "EmployeesTable",
   setup() {
-    const isLoading = ref(false)
     let employeeData = ref(null)
+    const filter = ref('')
 
     onMounted(async () => {
       const response = await axios.get('http://localhost:3001/data')
-      employeeData.value = await response.data
-      isLoading.value = true
+      employeeData = await response.data
+
+
     })
+
+    function fetchFromServer (startRow, count, filter, sortBy, descending) {
+      const data = filter
+          ? employeeData.filter(row => row.surname.includes(filter))
+          : employeeData.slice()
+      // handle sortBy
+      if (sortBy) {
+        const sortFn = sortBy === 'desc'
+            ? (descending
+                    ? (a, b) => (a.name > b.name ? -1 : a.name < b.name ? 1 : 0)
+                    : (a, b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0)
+            )
+            : (descending
+                    ? (a, b) => (parseFloat(b[ sortBy ]) - parseFloat(a[ sortBy ]))
+                    : (a, b) => (parseFloat(a[ sortBy ]) - parseFloat(b[ sortBy ]))
+            )
+        data.sort(sortFn)
+      }
 
 
     return {
       employeeData,
-      isLoading,
-      columns, rows,
+      columns, rows, pagination,
+      pagesNumber: computed(() => Math.ceil(rows.length / pagination.value.rowsPerPage)),
+      filter
     }
   }
 }
