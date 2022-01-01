@@ -1,37 +1,17 @@
 import axios from "axios";
-import {ref} from "vue";
 
-async function fetchData(page = 1) {
-    const response = await axios.get('http://localhost:3001/data', {
-        params: {
-            _page: page
-        }
-    })
+async function fetchData(employeeId) {
+    const response = await axios.get('http://localhost:3001/data/' + employeeId)
     return await response.data
 }
 export const rows = await fetchData(1)
 
-function calculateTotalCost(items) {
-    return items.reduce((totalCost, item) => {
-        return parseInt(totalCost) + parseInt(item.itemCost)
-
-    }, 0)
-}
-
-export const pagination = ref({
-    sortBy: 'name',
-    descending: false,
-    page: 1,
-    rowsPerPage: 10,
-    //rowsNumber: 10 // for server
-})
-
 export const columns = [
     {
-        name: 'name',
+        name: 'id',
         required: true,
-        label: 'ФИО',
-        field: row => `${row.surname} ${row.employeeName.charAt(0)}. ${row.fatherName.charAt(0)}`,
+        label: '№ п/п',
+        field: row => row.items.id,
         format: val => val,
         sortable: true,
         style: `font-weight: bold`,
@@ -58,4 +38,3 @@ export const columns = [
 
     }
 ]
-

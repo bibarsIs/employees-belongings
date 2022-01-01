@@ -7,6 +7,7 @@
       "fatherName": "Иванович",
       "items": [
         {
+          "_comment": "Using itemID instead of id may be a mistake?",
           "itemId": 1,
           "itemName": "Ноутбук ASUS",
           "itemCost": "270000"
