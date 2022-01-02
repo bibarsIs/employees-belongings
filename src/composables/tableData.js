@@ -13,7 +13,7 @@ export const rows = await fetchData(1)
 
 function calculateTotalCost(items) {
     return items.reduce((totalCost, item) => {
-        return parseInt(totalCost) + parseInt(item.itemCost)
+        return parseInt(totalCost) + parseInt(item['itemCost'])
 
     }, 0)
 }
@@ -42,7 +42,7 @@ export const columns = [
         required: true,
         label: 'Кол-во',
         field: row => row.items.length,
-        format: val => `${val}`,
+        format: val => val,
         sortable: true,
         align: "right"
 
@@ -50,9 +50,9 @@ export const columns = [
     {
         name: 'totalCost',
         required: true,
-        label: 'общая стоимость',
-        field: row => calculateTotalCost(row.items),
-        format: val => `${val}`,
+        label: 'Общая стоимость',
+        field: row => calculateTotalCost(row['items']),
+        format: val => val,
         sortable: true,
         align: "right"
 

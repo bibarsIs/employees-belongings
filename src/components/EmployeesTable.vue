@@ -10,6 +10,9 @@
         hide-pagination
         binary-state-sort
         :filter="filter"
+        @row-click="handleRowClick"
+        @row-dblclick="handleRowDoubleClick"
+        @row-contextmenu="handleRowRightClick"
     >
       <template v-slot:top-right>
         <q-input rounded dense debounce="300" v-model="filter" placeholder="Поиск">
@@ -36,6 +39,7 @@
 import {computed, onMounted, ref} from "vue";
 import axios from 'axios';
 import {columns, pagination, rows} from "../composables/tableData";
+import {useRouter} from "vue-router";
 
 
 export default {
@@ -43,15 +47,25 @@ export default {
   setup() {
     const filter = ref('')
 
-    onMounted(async () => {
-      //
-    })
+    const router = useRouter()
+
+    function handleRowClick(evt, row) {
+      console.log('event ' + evt)
+      console.log('clicked row with id ' + row['id'])
+    }
+    function handleRowDoubleClick(evt, row) {
+      router.push({ name: 'EditPage', params: { id: row['id'] } })
+    }
+    function handleRowRightClick(evt, row) {
+      console.log('event ' + evt)
+    }
 
 
     return {
       columns, rows, pagination,
       pagesNumber: computed(() => Math.ceil(rows.length / pagination.value.rowsPerPage)),
-      filter
+      filter,
+      handleRowClick, handleRowDoubleClick, handleRowRightClick
     }
   }
 }
