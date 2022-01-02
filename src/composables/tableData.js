@@ -1,15 +1,12 @@
 import axios from "axios";
 import {ref} from "vue";
 
-async function fetchData(page = 1) {
+async function fetchData() {
     const response = await axios.get('http://localhost:3001/data', {
-        params: {
-            _page: page
-        }
     })
     return await response.data
 }
-export const rows = await fetchData(1)
+export const rows = ref(await fetchData())
 
 function calculateTotalCost(items) {
     return items.reduce((totalCost, item) => {
@@ -23,7 +20,6 @@ export const pagination = ref({
     descending: false,
     page: 1,
     rowsPerPage: 10,
-    //rowsNumber: 10 // for server
 })
 
 export const columns = [

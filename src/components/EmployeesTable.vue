@@ -6,7 +6,6 @@
         :columns="columns"
         :row-key="row => row['id']"
         v-model:pagination="pagination"
-        table-header-style="font-weight: bold"
         hide-pagination
         binary-state-sort
         :filter="filter"
@@ -17,12 +16,14 @@
       <template v-slot:top-right>
         <q-input rounded dense debounce="300" v-model="filter" placeholder="Поиск">
           <template v-slot:append>
-            <q-icon name="search" />
+            <q-icon name="search"/>
           </template>
         </q-input>
       </template>
 
     </q-table>
+
+    <!--  pagination  -->
     <div class="row justify-center q-mt-md">
       <q-pagination
           v-model="pagination.page"
@@ -32,6 +33,36 @@
           :model-value="pagination.page"
       />
     </div>
+
+    <!--  shows context menu in cursor place for deleting  -->
+    <q-menu
+        v-model="showingContextMenu"
+        touch-position
+        context-menu
+    >
+      <q-btn color="red" @click="confirmDelete" label="Удалить" v-close-popup/>
+    </q-menu>
+    <!--  confirm deleting  -->
+    <q-dialog v-model="confirmIsVisible">
+      <q-card>
+        <q-card-section class="flex flex-col justify-between space-y-4 m-4">
+          <span>Подтвердить удаление?</span>
+          <div class="flex justify-between space-x-8">
+            <q-btn color="red" @click="handleDelete" label="Да" v-close-popup/>
+            <q-btn color="primary" label="Отмена" v-close-popup/>
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="deletedPopUp">
+      <q-card>
+        <q-card-section class="flex flex-col">
+          <span>Запись о сотруднике удалена</span>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
   </div>
 </template>
 
@@ -49,31 +80,52 @@ export default {
 
     const router = useRouter()
 
+    const showingContextMenu = ref(false)
+    const confirmIsVisible = ref(false)
+    const deletedPopUp = ref(false)
     function handleRowClick(evt, row) {
-      console.log('event ' + evt)
+      console.log(row)
       console.log('clicked row with id ' + row['id'])
     }
+
+    // go to employee page at row double click
     function handleRowDoubleClick(evt, row) {
-      router.push({ name: 'EditPage', params: { id: row['id'] } })
+      router.push({name: 'EditPage', params: {id: row['id']}})
     }
-    function handleRowRightClick(evt, row) {
-      console.log('event ' + evt)
+
+    // delete employee
+    let confirmDelete = ref(() => {})
+    let handleDelete = ref(() => {})
+    const handleRowRightClick = (evt, row) => {
+      showingContextMenu.value = true
+
+      confirmDelete.value = () => {
+        confirmIsVisible.value = true
+      }
+
+      // am I using closures? 😎
+      handleDelete.value = async () => {
+        await axios.delete('http://localhost:3001/data/' + row['id'])
+        rows.value = rows.value.filter(item => item['id'] !== row['id'])
+        deletedPopUp.value = true
+      }
     }
 
 
     return {
       columns, rows, pagination,
-      pagesNumber: computed(() => Math.ceil(rows.length / pagination.value.rowsPerPage)),
+      pagesNumber: computed(() => Math.ceil(rows.value.length / pagination.value.rowsPerPage)),
       filter,
-      handleRowClick, handleRowDoubleClick, handleRowRightClick
+      handleRowClick, handleRowDoubleClick, handleRowRightClick,
+      showingContextMenu, confirmDelete, confirmIsVisible, handleDelete, deletedPopUp
     }
   }
 }
 </script>
 
 <style scoped>
-  th {
-    border: 1px solid black;
-    padding: 4px;
-  }
+th {
+  border: 1px solid black;
+  padding: 4px;
+}
 </style>
