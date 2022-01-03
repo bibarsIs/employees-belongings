@@ -2,10 +2,10 @@ import axios from "axios";
 import {ref} from "vue";
 
 async function fetchData() {
-    const response = await axios.get('http://localhost:3001/data', {
-    })
+    const response = await axios.get('http://localhost:3001/data')
     return await response.data
 }
+
 export const rows = ref(await fetchData())
 
 function calculateTotalCost(items) {
@@ -13,6 +13,32 @@ function calculateTotalCost(items) {
         return parseInt(totalCost) + parseInt(item['itemCost'])
 
     }, 0)
+}
+
+export function createNewId(data) { // new id for adding new employee
+    let result = 1
+    for (let i = 0; i < data.length-1; i++) {
+        if (data[i]['id'] + 1 !== data[i+1]['id']) {
+            return data[i]['id'] + 1
+        }
+        result++
+    }
+    return result + 1
+
+    // let result = 1
+    // data.forEach((employee, index) => {
+    //     if (index < data.length - 1) {
+    //         result = index + 1
+    //         if (employee['id'] + 1 !== data[index + 1]['id']) { // if next id isn't current id + 1
+    //             result = employee['id'] + 1
+    //             return result
+    //         }
+    //     } else {
+    //         console.log('returning')
+    //         return result + 10
+    //     }
+    // })
+    // return 1
 }
 
 export const pagination = ref({

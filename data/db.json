@@ -117,7 +117,6 @@
           "itemName": "Ручка",
           "itemCost": "500"
         }
-
       ]
     },
     {
@@ -136,30 +135,6 @@
           "itemName": "Беспроводная мышь",
           "itemCost": "5000"
         }
-      ]
-    },
-    {
-      "id": 10,
-      "employeeName": "Айдос",
-      "surname": "Айдосов",
-      "fatherName": "Айдосович",
-      "items": [
-        {
-          "id": 6,
-          "itemName": "Карандаш",
-          "itemCost": "200"
-        },
-        {
-          "id": 2,
-          "itemName": "Беспроводная мышь",
-          "itemCost": "5000"
-        },
-        {
-          "id": 4,
-          "itemName": "Ручка",
-          "itemCost": "500"
-        }
-
       ]
     },
     {

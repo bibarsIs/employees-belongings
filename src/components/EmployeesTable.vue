@@ -63,19 +63,25 @@
       </q-card>
     </q-dialog>
 
+    <!-- link to add new record -->
+    <div>
+      <router-link :to="{ name: 'EditPage', params: {id: newId} }">
+        <q-btn color="primary" label="Добавить"/>
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script>
 import {computed, onMounted, ref} from "vue";
 import axios from 'axios';
-import {columns, pagination, rows} from "../composables/tableData";
+import {columns, createNewId, pagination, rows} from "../composables/tableData";
 import {useRouter} from "vue-router";
 
 
 export default {
   name: "EmployeesTable",
-  setup() {
+  setup(delta) {
     const filter = ref('')
 
     const router = useRouter()
@@ -83,8 +89,8 @@ export default {
     const showingContextMenu = ref(false)
     const confirmIsVisible = ref(false)
     const deletedPopUp = ref(false)
+
     function handleRowClick(evt, row) {
-      console.log(row)
       console.log('clicked row with id ' + row['id'])
     }
 
@@ -94,8 +100,10 @@ export default {
     }
 
     // delete employee
-    let confirmDelete = ref(() => {})
-    let handleDelete = ref(() => {})
+    const confirmDelete = ref(() => {
+    })
+    const handleDelete = ref(() => {
+    })
     const handleRowRightClick = (evt, row) => {
       showingContextMenu.value = true
 
@@ -103,13 +111,20 @@ export default {
         confirmIsVisible.value = true
       }
 
-      // am I using closures? 😎
       handleDelete.value = async () => {
         await axios.delete('http://localhost:3001/data/' + row['id'])
         rows.value = rows.value.filter(item => item['id'] !== row['id'])
         deletedPopUp.value = true
+        router.go(0) // refresh page
       }
     }
+
+    const newId = ref(1)
+
+    onMounted(async () => {
+      newId.value = createNewId(rows.value)
+      console.log(newId.value)
+    })
 
 
     return {
@@ -117,7 +132,8 @@ export default {
       pagesNumber: computed(() => Math.ceil(rows.value.length / pagination.value.rowsPerPage)),
       filter,
       handleRowClick, handleRowDoubleClick, handleRowRightClick,
-      showingContextMenu, confirmDelete, confirmIsVisible, handleDelete, deletedPopUp
+      showingContextMenu, confirmDelete, confirmIsVisible, handleDelete, deletedPopUp,
+      newId
     }
   }
 }

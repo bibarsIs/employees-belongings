@@ -3,7 +3,10 @@
   <div class="flex flex-col items-center h-screen pt-16">
     <div class="font-bold mb-8 flex flex-col items-start min-w-[50%] justify-start">
       <router-link :to="{ name: 'HomePage' }" class="mb-12">
-        <q-btn color="primary"><q-icon name="arrow_back"/> Назад</q-btn>
+        <q-btn color="primary">
+          <q-icon name="arrow_back"/>
+          Назад
+        </q-btn>
       </router-link>
       <h1 class="text-2xl">Данные о сотруднике</h1>
     </div>
@@ -45,6 +48,7 @@
         </div>
       </q-form>
 
+      <!--   table   -->
       <q-table
           title="Список выданных материальных ценностей:"
           :rows="rows"
@@ -65,6 +69,20 @@
           </q-tr>
         </template>
       </q-table>
+
+      <div class="space-x-8">
+        <q-btn color="primary" label="Сохранить" @click="handleSaveForm"/>
+        <q-btn color="red" label="Отмена" @click="handleResetForm"/>
+      </div>
+
+      <q-dialog v-model="savedPopUp">
+        <q-card>
+          <q-card-section class="flex flex-col">
+            <span>Сохранено</span>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
+
     </div>
   </div>
 
@@ -73,8 +91,9 @@
 <script>
 import {ref} from "vue";
 import {fetchData} from "../composables/itemsTable";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {onMounted} from "vue";
+import axios from "axios";
 
 
 export default {
@@ -82,15 +101,19 @@ export default {
 
   setup() {
     const route = useRoute()
+    const router = useRouter()
 
-    let surname = ref('')
-    let employeeName = ref('')
-    let fatherName = ref('')
+    const surname = ref('')
+    const employeeName = ref('')
+    const fatherName = ref('')
     const employeeId = route.params.id
-    let rows = ref('')
-    let data = ref(null)
-    let totalCost = ref(null)
-    let isLoading = ref(true)
+    const rows = ref('')
+    const data = ref(null)
+    const totalCost = ref(null)
+    const isLoading = ref(true)
+    const savedPopUp = ref(false)
+    const handleSaveForm = ref(() => {
+    })
 
 
     const columns = [ // need it here only because of index. Otherwise, would put into itemsTable.js
@@ -126,33 +149,54 @@ export default {
       }
     ]
 
+    function calculateTotalCost(items) {
+      return items.reduce((totalCost, item) => {
+        return parseInt(totalCost) + parseInt(item['itemCost'])
+      }, 0)
+    }
+
     onMounted(async () => {
-      function calculateTotalCost(items) {
-        return items.reduce((totalCost, item) => {
-          return parseInt(totalCost) + parseInt(item['itemCost'])
-        }, 0)
-      }
 
       data.value = await fetchData(employeeId)
       rows.value = data.value['items']
-      rows.value.forEach((row, index) => { // perhaps use Array.from().forEach?
-        row['index'] = index + 1
-      })
-
-      totalCost.value = calculateTotalCost(rows.value)
+      if (rows.value !== undefined) {
+        rows.value.forEach((row, index) => { // perhaps use Array.from().forEach?
+          row['index'] = index + 1
+        })
+        totalCost.value = calculateTotalCost(rows.value)
+      }
 
       surname.value = data.value['surname']
       employeeName.value = data.value['employeeName']
       fatherName.value = data.value['fatherName']
 
       isLoading.value = false
+
+      handleSaveForm.value = async () => {
+        await axios.patch('http://localhost:3001/data/' + data.value['id'], {
+          employeeName: employeeName.value,
+          surname: surname.value,
+          fatherName: fatherName.value
+        })
+        savedPopUp.value = true
+        router.go(0) // refresh page
+      }
     })
 
-      return {
+
+    function handleResetForm() {
+      surname.value = data.value['surname']
+      employeeName.value = data.value['employeeName']
+      fatherName.value = data.value['fatherName']
+
+    }
+
+    return {
       surname, employeeName, fatherName,
       rows, columns, data,
       totalCost,
       isLoading,
+      handleSaveForm, handleResetForm, savedPopUp
     }
   }
 
