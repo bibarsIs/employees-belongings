@@ -3,7 +3,7 @@
     <div v-if="isLoading" class="flex justify-center pt-32">
       <q-spinner size="6em"></q-spinner>
     </div>
-    <EmployeeForm v-else :employee-data="employeeData" @employeeDataUpdated="handleEmployeeDataUpdated"></EmployeeForm>
+    <EmployeeForm v-else :employee-data="employeeData"></EmployeeForm>
   </div>
 </template>
 
@@ -25,18 +25,15 @@ export default {
     const employeeData = ref(null)
     const employeeId = route.params.id
     const isLoading = ref(true)
-    async function handleEmployeeDataUpdated() {
-      employeeData.value = await fetchData(employeeId)
-    }
 
     onMounted(async () => {
       employeeData.value = await fetchData(employeeId)
       isLoading.value = false
     })
 
+
     return {
       employeeData,
-      handleEmployeeDataUpdated,
       isLoading
     }
   }

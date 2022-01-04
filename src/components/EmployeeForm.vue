@@ -49,6 +49,7 @@
       </q-form>
 
       <!--   table   -->
+      <AddItem :employee-id="employeeData['id']" @updateTable="handleUpdateTable"></AddItem>
       <q-table
           title="Список выданных материальных ценностей:"
           :rows="rows"
@@ -93,10 +94,13 @@ import {ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {onMounted} from "vue";
 import axios from "axios";
+import AddItem from "./AddItem.vue";
+import {createNewId} from "../composables/employeesTable";
 
 
 export default {
   name: "EmployeeForm",
+  components: {AddItem},
   props: {
     employeeData: {
       type: Object,
@@ -116,7 +120,7 @@ export default {
     const employeeName = ref('')
     const fatherName = ref('')
     const employeeId = route.params.id
-    const rows = ref('')
+    const rows = ref([])
     let localEmployeeData = props.employeeData
     const totalCost = ref(null)
     const isLoading = ref(true)
@@ -164,6 +168,7 @@ export default {
       }, 0)
     }
 
+    let initialRows = []
     onMounted(async () => {
 
       rows.value = localEmployeeData['items']
@@ -173,7 +178,7 @@ export default {
         })
         totalCost.value = calculateTotalCost(rows.value)
       }
-
+      initialRows = rows.value.slice(0) // pass by value
       surname.value = localEmployeeData['surname']
       employeeName.value = localEmployeeData['employeeName']
       fatherName.value = localEmployeeData['fatherName']
@@ -194,18 +199,29 @@ export default {
 
 
     function handleResetForm() {
+      rows.value = initialRows // bug. Only works once
       surname.value = localEmployeeData['surname']
       employeeName.value = localEmployeeData['employeeName']
       fatherName.value = localEmployeeData['fatherName']
 
     }
 
+
+    function handleUpdateTable(params) {
+      rows.value.push({
+        index: rows.value.at(-1)['index'] + 1,
+        id: createNewId(rows),
+        itemName: params.itemName,
+        itemCost: params.itemCost
+      })
+    }
     return {
       surname, employeeName, fatherName,
       rows, columns, localEmployeeData,
       totalCost,
       isLoading,
-      handleSaveForm, handleResetForm, savedPopUp
+      handleSaveForm, handleResetForm, savedPopUp,
+      handleUpdateTable
     }
   }
 

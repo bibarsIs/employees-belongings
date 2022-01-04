@@ -76,9 +76,35 @@
       ]
     },
     {
+      "id": 6,
+      "employeeName": "Сергей",
+      "surname": "Сергеев",
+      "fatherName": "Сергеевич",
+      "items": [
+        {
+          "id": 4,
+          "itemName": "Ручка",
+          "itemCost": "500"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "employeeName": "Дмитрий",
+      "surname": "Дмитриев",
+      "fatherName": "Дмитриевич",
+      "items": [
+        {
+          "id": 5,
+          "itemName": "Планшет",
+          "itemCost": "100000"
+        }
+      ]
+    },
+    {
       "id": 8,
       "employeeName": "Александр",
-      "surname": "Иванов",
+      "surname": "Дмитриев",
       "fatherName": "Дмитриевич",
       "items": [
         {
@@ -91,11 +117,12 @@
           "itemName": "Ручка",
           "itemCost": "500"
         }
+
       ]
     },
     {
       "id": 9,
-      "employeeName": "Азат",
+      "employeeName": "Канат",
       "surname": "Канатов",
       "fatherName": "Канатович",
       "items": [
@@ -109,6 +136,30 @@
           "itemName": "Беспроводная мышь",
           "itemCost": "5000"
         }
+      ]
+    },
+    {
+      "id": 10,
+      "employeeName": "Айдос",
+      "surname": "Айдосов",
+      "fatherName": "Айдосович",
+      "items": [
+        {
+          "id": 6,
+          "itemName": "Карандаш",
+          "itemCost": "200"
+        },
+        {
+          "id": 2,
+          "itemName": "Беспроводная мышь",
+          "itemCost": "5000"
+        },
+        {
+          "id": 4,
+          "itemName": "Ручка",
+          "itemCost": "500"
+        }
+
       ]
     },
     {
