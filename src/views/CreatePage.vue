@@ -1,4 +1,5 @@
 <template>
+<!-- won't work with json-server -->
   <EditPage></EditPage>
 </template>
 
