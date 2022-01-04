@@ -76,35 +76,9 @@
       ]
     },
     {
-      "id": 6,
-      "employeeName": "Сергей",
-      "surname": "Сергеев",
-      "fatherName": "Сергеевич",
-      "items": [
-        {
-          "id": 4,
-          "itemName": "Ручка",
-          "itemCost": "500"
-        }
-      ]
-    },
-    {
-      "id": 7,
-      "employeeName": "Дмитрий",
-      "surname": "Дмитриев",
-      "fatherName": "Дмитриевич",
-      "items": [
-        {
-          "id": 5,
-          "itemName": "Планшет",
-          "itemCost": "100000"
-        }
-      ]
-    },
-    {
       "id": 8,
       "employeeName": "Александр",
-      "surname": "Дмитриев",
+      "surname": "Иванов",
       "fatherName": "Дмитриевич",
       "items": [
         {
@@ -121,7 +95,7 @@
     },
     {
       "id": 9,
-      "employeeName": "Канат",
+      "employeeName": "Азат",
       "surname": "Канатов",
       "fatherName": "Канатович",
       "items": [

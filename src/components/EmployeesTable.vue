@@ -75,7 +75,7 @@
 <script>
 import {computed, onMounted, ref} from "vue";
 import axios from 'axios';
-import {columns, createNewId, pagination, rows} from "../composables/tableData";
+import {columns, createNewId, pagination, rows} from "../composables/employeesTable";
 import {useRouter} from "vue-router";
 
 
@@ -115,7 +115,7 @@ export default {
         await axios.delete('http://localhost:3001/data/' + row['id'])
         rows.value = rows.value.filter(item => item['id'] !== row['id'])
         deletedPopUp.value = true
-        router.go(0) // refresh page
+        router.go(0) // refresh page, temp fast solution to update data
       }
     }
 
@@ -123,7 +123,6 @@ export default {
 
     onMounted(async () => {
       newId.value = createNewId(rows.value)
-      console.log(newId.value)
     })
 
 
