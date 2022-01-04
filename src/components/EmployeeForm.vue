@@ -178,7 +178,7 @@ export default {
         })
         totalCost.value = calculateTotalCost(rows.value)
       }
-      initialRows = rows.value.slice(0) // pass by value
+      initialRows = rows.value === undefined ? undefined : rows.value.slice(0)// pass by value
       surname.value = localEmployeeData['surname']
       employeeName.value = localEmployeeData['employeeName']
       fatherName.value = localEmployeeData['fatherName']
